@@ -6,10 +6,7 @@ import com.example.social.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -27,6 +24,11 @@ public class UserController {
     @PostMapping(path = "/users")
     public Mono<ResponseEntity<UserDTO>> saveUser(@RequestBody UserDTO userDTO){
      return userService.save(mapper.map(userDTO, User.class)).map(user -> ResponseEntity.ok(mapper.map(user,UserDTO.class)));
+    }
+
+    @DeleteMapping(path = "/users/{id}")
+    public Mono<ResponseEntity<String>> deleteUser(@PathVariable String id){
+        return userService.delete(id).log().thenReturn(ResponseEntity.ok("ok"));
     }
 
 }
