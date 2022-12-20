@@ -4,10 +4,15 @@ import com.example.social.dtos.UserDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Scheduler;
+import reactor.core.scheduler.Schedulers;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
@@ -20,6 +25,8 @@ import java.util.stream.IntStream;
 @RequestMapping("/api/playground/v1")
 public class PlayGroundController {
 
+
+    Scheduler boundedElastic = Schedulers.boundedElastic();
 
     @GetMapping("/interval/{items}/{delay}")
     public Flux<Integer> fluxItems(@PathVariable Integer items, @PathVariable Integer delay){
@@ -37,6 +44,7 @@ public class PlayGroundController {
                 .uri("/users/{id}", Map.of("id", userId))
                 .retrieve()
                 .bodyToMono(UserDTO.class)
+                .publishOn(boundedElastic)
                 .log()
                 .flatMap(user -> Mono.just(ResponseEntity.ok(user.getName().toUpperCase())));
     }
