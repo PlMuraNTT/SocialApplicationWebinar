@@ -1,7 +1,7 @@
 package com.example.social;
 
 
-import com.example.social.model.CommentDTO;
+import com.example.social.dtos.CommentDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.reactive.function.client.WebClient;

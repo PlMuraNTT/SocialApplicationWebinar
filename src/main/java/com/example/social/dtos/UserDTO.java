@@ -1,4 +1,4 @@
-package com.example.social.model;
+package com.example.social.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

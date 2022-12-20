@@ -1,7 +1,7 @@
 package com.example.social.controller;
 
 import com.example.social.collection.User;
-import com.example.social.model.UserDTO;
+import com.example.social.dtos.UserDTO;
 import com.example.social.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
