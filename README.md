@@ -5,4 +5,4 @@
 
 ### Getting started
 
-*Fare riferimento alla cartella resources.*
+*Fare riferimento alla cartella risorse.*
