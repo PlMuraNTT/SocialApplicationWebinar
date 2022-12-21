@@ -49,4 +49,18 @@ public class PlayGroundController {
                 .flatMap(user -> Mono.just(ResponseEntity.ok(user.getName().toUpperCase())));
     }
 
+    @GetMapping("/localusers/{id}")
+    public Mono<ResponseEntity<UserDTO>> callUserController(@PathVariable(name = "id") Integer userId){
+
+        return WebClient.create("http://localhost:8080/api/v1")
+                .method(HttpMethod.GET)
+                .uri("/users/{id}", Map.of("id", userId))
+                .retrieve()
+                .bodyToMono(UserDTO.class)
+                .publishOn(boundedElastic)
+                .doOnError(throwable -> log.error(throwable.getMessage(),throwable))
+                .log()
+                .flatMap(user -> Mono.just(ResponseEntity.ok(user)));
+    }
+
 }

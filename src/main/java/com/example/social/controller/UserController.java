@@ -26,7 +26,7 @@ public class UserController {
 
 
     @PostMapping(path = "/users")
-    public Mono<ResponseEntity<UserDTO>> saveUser(@RequestBody User userDTO){
+    public Mono<ResponseEntity<UserDTO>> saveUser(@RequestBody UserDTO userDTO){
      return userService.save(mapper.map(userDTO, User.class))
              .doOnNext(user -> log.info("Utente salvato {}",user))
              .flatMap(user -> Mono.just(user))
